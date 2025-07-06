@@ -1,0 +1,37 @@
+
+name: deploy to server
+'on':
+  push:
+    branches:
+      - main
+jobs:
+  first_job:
+    env:
+      name: CodigoFacilito
+    runs-on: ubuntu-latest
+
+    outputs:
+      salida: ${{ steps.step_1.outputs.my_variable }}
+    steps:
+      - name: Working dir
+        id: step_1
+        run: echo "my_variable=Hola Mundo" >> $GITHUB_OUTPUT
+
+      - name: Print variable
+        run: echo "${{ steps.step_1.outputs.my_variable }}"
+      
+      # - name: Actions
+      #   uses: actions/checkout@v4
+      # - name: Working dir after checkout
+      #   run: ls -al
+  
+  second_job:
+    if: ${{ github.ref == 'refs/heads/main' }}
+    needs: first_job
+    runs-on: ubuntu-latest
+
+    env:
+      SALIDA: ${{needs.first_job.outputs.salida }}
+    steps:
+      - name: Hola mundo
+        run: echo "$SALIDA"
