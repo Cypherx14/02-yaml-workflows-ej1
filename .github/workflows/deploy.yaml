@@ -1,9 +1,17 @@
 ---
+name: deploy to server
+'on':
+  push:
+    branches:
+      - main
 jobs:
   first_job:
     env:
       name: CodigoFacilito
     runs-on: ubuntu-latest
+
+    outputs:
+      salida: ${{ steps.step_1.outputs.my_variable }}
     steps:
       - name: Working dir
         id: step_1
@@ -21,11 +29,9 @@ jobs:
     if: ${{ github.ref == 'refs/heads/main' }}
     needs: first_job
     runs-on: ubuntu-latest
+
+    env:
+      SALIDA: ${{needs.first_job.outputs.salida }}
     steps:
       - name: Hola mundo
-        run: echo "Hola mundo desde GitHub Actions 2"
-name: deploy to server
-'on':
-  push:
-    branches:
-      - main
+        run: echo "$SALIDA"
