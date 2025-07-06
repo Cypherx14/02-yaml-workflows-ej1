@@ -13,7 +13,7 @@ jobs:
       name: "CodigoFacilito"
     steps: 
       - name: Hola mundo
-        run: echo "Hola mundo desde GitHub Actions $CodigoFacilito"
+        run: echo "Hola mundo desde GitHub Actions $name"
   second_job:
     if: ${{ github.ref == 'refs/heads/main' }}
     needs: first_job
