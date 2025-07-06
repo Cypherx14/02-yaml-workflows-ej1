@@ -28,3 +28,5 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: archivo-test
+      - name: Verificar contenido
+        run: cat test.log
