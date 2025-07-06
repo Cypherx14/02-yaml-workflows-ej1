@@ -1,25 +1,26 @@
-
-name: deploy to server
-
-on: 
-  push:
-    branches:
-      - main
-
-jobs: 
+---
+jobs:
   first_job:
-    runs-on: ubuntu-latest
     env:
-      name: "CodigoFacilito"
-    steps: 
-      - name: Hola mundo
-        run: echo "Hola mundo desde GitHub Actions $name"
+      name: CodigoFacilito
+    runs-on: ubuntu-latest
+    steps:
+      - name: Working dir
+        run: ls -al
+      - name: Actions
+        uses: actions/checkout@v4
+      - name: Working dir after checkout
+        run: ls -al
+  
   second_job:
     if: ${{ github.ref == 'refs/heads/main' }}
     needs: first_job
     runs-on: ubuntu-latest
-
-    steps: 
+    steps:
       - name: Hola mundo
         run: echo "Hola mundo desde GitHub Actions 2"
-    
+name: deploy to server
+'on':
+  push:
+    branches:
+      - main
